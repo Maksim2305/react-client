@@ -1,4 +1,3 @@
-import type React from 'react';
 import { MyButton } from '../button';
 import { Link } from 'react-router-dom';
 

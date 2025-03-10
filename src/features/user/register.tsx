@@ -1,4 +1,3 @@
-import type React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../components/input';
@@ -11,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { hasErrorField } from '../../utils/has-error-field';
 import { ErrorMessage } from '../../components/error-message';
 
-type Register = {
+type RegisterField = {
   email: string;
   password: string;
   name: string;
@@ -26,7 +25,7 @@ export const Register: React.FC<Props> = ({ setSelected }) => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<Register>({
+  } = useForm<RegisterField>({
     mode: 'onChange',
     reValidateMode: 'onBlur',
     defaultValues: {
@@ -41,7 +40,7 @@ export const Register: React.FC<Props> = ({ setSelected }) => {
   const [error, setError] = useState('');
   const [triggerCurrentQuery] = useLazyCurrentQuery();
 
-  const onSubmit = async (data: Register) => {
+  const onSubmit = async (data: RegisterField) => {
     try {
       await register(data).unwrap();
       setSelected('login');

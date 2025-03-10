@@ -1,4 +1,4 @@
-import React, { useState, useMemo, createContext } from 'react';
+import { useState, useMemo, createContext } from 'react';
 import type { ReactNode } from 'react';
 import {
   ThemeProvider as MuiThemeProvider,
@@ -34,7 +34,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
         palette: {
           mode: theme,
           primary: {
-            main: theme === 'light' ? '#1976d2' : '#90caf9',
+            main: theme === 'light' ? '#000' : '#fff',
+          },
+          success: {
+            main: '#4ec752',
           },
           background: {
             default: theme === 'light' ? '#ffffff' : '#121212',
@@ -42,6 +45,90 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
           },
           text: {
             primary: theme === 'light' ? '#000' : '#fff',
+          },
+        },
+        typography: {
+          fontFamily: '"Poppins", "Helvetica", "Arial", sans-serif',
+          h1: {
+            fontSize: '2.5rem',
+            fontWeight: 700,
+          },
+          h2: {
+            fontSize: '2rem',
+            fontWeight: 500,
+          },
+          body1: {
+            fontSize: '1rem',
+            fontWeight: 400,
+          },
+        },
+        components: {
+          MuiTypography: {
+            styleOverrides: {
+              root: {
+                '&.MuiTypography-colorSuccess': {
+                  color: theme === 'light' ? '#000' : '#fff',
+                },
+              },
+            },
+          },
+          MuiCard: {
+            styleOverrides: {
+              root: {
+                borderRadius: '12px',
+                backgroundColor: theme === 'light' ? '#E3F2FD' : '#1e1e1e',
+                boxShadow:
+                  theme === 'light'
+                    ? '0px 4px 12px rgba(0, 0, 0, 0.1)'
+                    : '0px 4px 12px rgba(255, 255, 255, 0.1)',
+                transition: 'transform 0.2s ease-in-out',
+                '&:hover': {
+                  transform: 'scale(1.02)',
+                },
+              },
+            },
+          },
+          MuiCardHeader: {
+            styleOverrides: {
+              root: {
+                backgroundColor: theme === 'light' ? '#f5f5f5' : '#1e1e1e',
+                borderBottom: `1px solid ${theme === 'light' ? '#e0e0e0' : '#333'}`,
+              },
+              title: {
+                fontWeight: 700,
+              },
+            },
+          },
+          MuiCardContent: {
+            styleOverrides: {
+              root: {
+                padding: '16px',
+              },
+            },
+          },
+          MuiTextField: {
+            styleOverrides: {
+              root: {
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '12px',
+                },
+              },
+            },
+          },
+          MuiInputBase: {
+            styleOverrides: {
+              root: {
+                borderRadius: '12px',
+              },
+            },
+          },
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                borderRadius: '12px',
+                textTransform: 'none',
+              },
+            },
           },
         },
       }),
