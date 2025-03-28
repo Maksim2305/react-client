@@ -35,7 +35,7 @@ export const Input: React.FC<Props> = ({
       <TextField
         id={name}
         className={className}
-        label={label}
+        label={type === 'date' && !field.value ? '' : label}
         type={type}
         placeholder={placeholder}
         value={field.value}

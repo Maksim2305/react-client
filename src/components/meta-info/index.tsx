@@ -3,11 +3,12 @@ import type { IconType } from 'react-icons';
 type Props = {
   count: number;
   Icon: IconType;
+  onClick?: () => void;
 };
 
-const MetaInfo: React.FC<Props> = ({ count, Icon }) => {
+const MetaInfo: React.FC<Props> = ({ count, Icon, onClick }) => {
   return (
-    <div className="flex items-center gap-2 cursor-pointer">
+    <div className="flex items-center gap-2 cursor-pointer" onClick={onClick}>
       {count > 0 && (
         <p className="font-semibold text-default-400 text-l">{count}</p>
       )}

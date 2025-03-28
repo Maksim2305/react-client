@@ -37,7 +37,7 @@ type Props = {
   commentId?: string;
   likesCount?: number;
   commentsCount?: number;
-  createdAt: Date;
+  createdAt?: Date;
   id?: string;
   cardFor: 'comment' | 'post' | 'current-post';
   likedByUser?: boolean;
@@ -67,6 +67,7 @@ const Card = ({
   const currentUser = useAppSelector(selectCurrent);
 
   const handleDelete = async () => {
+    console.log(cardFor);
     try {
       switch (cardFor) {
         case 'post':
@@ -94,6 +95,29 @@ const Card = ({
     }
   };
 
+  const handleLike = async () => {
+    try {
+      if (likedByUser) {
+        await unlikePost(id).unwrap();
+      } else {
+        await likePost({ postId: id }).unwrap();
+      }
+      if (cardFor === 'post') {
+        await triggerGetAllPosts().unwrap();
+      }
+      if (cardFor === 'current-post') {
+        await triggerGetPostById(id).unwrap();
+      }
+    } catch (error) {
+      console.error(error);
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      } else {
+        setError(error as string);
+      }
+    }
+  };
+
   return (
     <MuiCard className="mb-5">
       <Box
@@ -113,15 +137,17 @@ const Card = ({
             description={createdAt && formatToClientDate(createdAt)}
           ></User>
         </Link>
-        {currentUser && authorId === currentUser.id && (
-          <div className="cursor-pointer" onClick={handleDelete}>
-            {deleteCommentStatus.isLoading || deletePostStatus.isLoading ? (
-              <CircularProgress />
-            ) : (
-              <RiDeleteBinLine />
-            )}
-          </div>
-        )}
+        {cardFor !== 'current-post' &&
+          currentUser &&
+          authorId === currentUser.id && (
+            <div className="cursor-pointer" onClick={handleDelete}>
+              {deleteCommentStatus.isLoading || deletePostStatus.isLoading ? (
+                <CircularProgress />
+              ) : (
+                <RiDeleteBinLine />
+              )}
+            </div>
+          )}
       </Box>
       <CardContent className="px-3 py-2 mb-5">
         <Typography>{content}</Typography>
@@ -131,12 +157,15 @@ const Card = ({
           <div className="flex gap-5 items-center">
             <div className="flex gap-5 items-center p-2">
               <MetaInfo
+                onClick={handleLike}
                 count={likesCount}
                 Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder}
               />
-              <Link to={`/posts/${id}`}>
-                <MetaInfo count={commentsCount} Icon={FaRegComment} />
-              </Link>
+              {cardFor === 'post' && (
+                <Link to={`/posts/${id}`}>
+                  <MetaInfo count={commentsCount} Icon={FaRegComment} />
+                </Link>
+              )}
             </div>
           </div>
           <ErrorMessage error={error} />

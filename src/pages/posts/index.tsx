@@ -33,6 +33,7 @@ export const Posts = () => {
                 id={id}
                 createdAt={createdAt}
                 cardFor="post"
+                likedByUser={likedByUser}
               />
             )
           )

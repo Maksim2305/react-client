@@ -40,7 +40,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
             main: '#4ec752',
           },
           background: {
-            default: theme === 'light' ? '#ffffff' : '#121212',
+            default: theme === 'light' ? '#cbeefb' : '#121212',
             paper: theme === 'light' ? '#f5f5f5' : '#1e1e1e',
           },
           text: {
@@ -76,7 +76,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
             styleOverrides: {
               root: {
                 borderRadius: '12px',
-                backgroundColor: theme === 'light' ? '#E3F2FD' : '#1e1e1e',
+                backgroundColor: theme === 'light' ? '#fff' : '#1e1e1e',
                 boxShadow:
                   theme === 'light'
                     ? '0px 4px 12px rgba(0, 0, 0, 0.1)'
@@ -111,6 +111,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
               root: {
                 '& .MuiOutlinedInput-root': {
                   borderRadius: '12px',
+                  backgroundColor: theme === 'light' ? '#fff' : '',
                 },
               },
             },

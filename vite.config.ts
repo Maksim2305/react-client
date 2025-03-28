@@ -14,4 +14,9 @@ export default defineConfig({
     setupFiles: "src/setupTests",
     mockReset: true,
   },
+  resolve: {
+    alias: {
+      '@tiptap/starter-kit': 'node_modules/@tiptap/starter-kit',
+    },
+  },
 })
